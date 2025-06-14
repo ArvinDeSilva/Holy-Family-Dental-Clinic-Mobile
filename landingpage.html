@@ -4905,13 +4905,14 @@ document.querySelectorAll('.menu-item').forEach(item => {
             }
         }
 
-if (window.matchMedia("(max-width: 768px").matches) {
+// Only enable dragging for mobile devices
+if (window.matchMedia("(max-width: 768px)").matches) {
     const recordsBookmark = document.querySelector('.records-bookmark');
     let isDraggingBookmark = false;
     let startX, startY, startLeft, startTop;
     let bookmarkRect;
 
-   
+    
 
     function handleBookmarkStart(e) {
         isDraggingBookmark = true;
@@ -4933,17 +4934,10 @@ if (window.matchMedia("(max-width: 768px").matches) {
         
         const touch = e.type === 'touchmove' ? e.touches[0] : e;
         const dx = touch.clientX - startX;
-        
-        // Calculate new horizontal position without constraints
-        const newLeft = startLeft + dx;
-        
-        // Apply the new position directly during drag
-        recordsBookmark.style.left = `${newLeft}px`;
-        recordsBookmark.style.right = 'auto';
-        
-        // Also handle vertical movement
         const dy = touch.clientY - startY;
+        
         const newTop = Math.max(150, Math.min(window.innerHeight - 150, startTop + dy));
+        
         recordsBookmark.style.top = `${newTop}px`;
     }
 
@@ -4957,19 +4951,18 @@ if (window.matchMedia("(max-width: 768px").matches) {
         const rect = recordsBookmark.getBoundingClientRect();
         const viewportWidth = window.innerWidth;
         
-        // Determine which side is closer
-        const distanceToLeft = rect.left;
-        const distanceToRight = viewportWidth - rect.right;
-        
-        const position = distanceToLeft < distanceToRight ? 'left' : 'right';
-        
-        // Remove transform and apply final positioning
-        recordsBookmark.style.left = position === 'left' ? '-5px' : 'auto';
-        recordsBookmark.style.right = position === 'right' ? '-5px' : 'auto';
-        
-        // Update class for styling if needed
+        // Horizontal snap
+        const position = rect.left + (rect.width / 2) < viewportWidth / 2 ? 'left' : 'right';
         recordsBookmark.classList.remove('left', 'right');
         recordsBookmark.classList.add(position);
+        
+        if (position === 'left') {
+            recordsBookmark.style.left = '-5px';
+            recordsBookmark.style.right = 'auto';
+        } else {
+            recordsBookmark.style.right = '-5px';
+            recordsBookmark.style.left = 'auto';
+        }
         
         // Save position
         localStorage.setItem('recordsBookmarkPosition', position);
@@ -4994,6 +4987,17 @@ if (window.matchMedia("(max-width: 768px").matches) {
         }
     });
 }
+
+
+
+
+
+//-------------------------------------
+//---------------NEED KO PA AYUSIN YUNG BOOKMARK MOVES(ALSO CAN MOVE TRU LEFT OR RIGHT)----------------------
+//-------------------------------------
+//-------------------------------------
+
+
     </script>
 </body>
 
