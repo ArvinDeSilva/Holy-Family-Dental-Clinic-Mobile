@@ -69,7 +69,7 @@
 
         html, body {
             height: 100%;
-            overflow: auto;
+            overflow: hidden;
         }
 
         body {
@@ -741,68 +741,7 @@
         /* MEDIA QUERIES FOR RESPONSIVENESS */
         /* ============================================= */
 
-        @media (max-width: 1200px) {
-            .container-layout {
-                flex-direction: column;
-                height: auto;
-            }
-            .left-container, .right-container {
-                flex: 1 1 100%;
-            }
-            .stat-cards-container {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        @media (max-width: 1024px) {
-            .stat-cards-container {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            .container-layout {
-                flex-direction: column;
-                height: auto;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .dashboard {
-                flex-direction: column;
-                height: auto;
-            }
-            .stat-cards-container {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .sidebar {
-                width: 100%;
-                position: relative;
-                padding: 10px;
-            }
-            .sidebar-menu li a {
-                font-size: 14px;
-                padding: 10px;
-            }
-            .main-content {
-                padding: 10px;
-            }
-            .bulk-actions {
-                flex-direction: column;
-                gap: 10px;
-                align-items: flex-start;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .stat-cards-container {
-                grid-template-columns: 1fr;
-            }
-            .requests-table-container, .calendar-grid {
-                overflow-x: auto;
-            }
-            .requests-table, .calendar-grid {
-                min-width: 600px;
-            }
-        }
-
+       
         /* Add these styles to your existing <style> section */
         .notification-count {
             background-color: var(--sidebar-active);
@@ -1063,40 +1002,7 @@
             background: #6c757d;
         }
 
-
-
-        @media (max-width: 768px) {
-            .date-picker-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .date-picker-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .search-container {
-                flex-direction: column;
-                gap: 6px;
-            }
-            .search-wrapper, .filter-wrapper {
-                width: 100%;
-                flex-direction: column;
-            }
-            .modal-content, .confirmation-content {
-                width: 95% !important;
-                padding: 15px !important;
-            }
-            .tab-btn, .calendar-nav button {
-                font-size: 12px;
-                padding: 6px;
-            }
-            .confirmation-buttons button {
-                font-size: 12px;
-                padding: 8px 12px;
-            }
-        }
-
+       
         .date-picker-popup {
             max-height: 400px;
             overflow-y: auto;
@@ -2458,13 +2364,571 @@
     font-weight: 500;
 }
 
-#loadingOverlay {
-    transition: opacity 0.3s ease;
+/* ============================================= */
+/*  Mobile responsiveness */
+/* ============================================= */
+
+@media (max-width: 768px) {
+
+        html, body {
+        height: 100%;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .burger-menu {
+    display: block;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1001;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 1px;
 }
 
-/* ============================================= */
-/*  End of Styles */
-/* ============================================= */
+.burger-menu span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px 0;
+    background-color: #2c3e50; /* Darker color for better visibility */
+    transition: all 0.3s ease;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2); /* Add shadow for better contrast */
+}
+
+/* Active state for burger menu */
+.burger-menu.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+    background-color: #2c3e50;
+}
+
+.burger-menu.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.burger-menu.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+    background-color: #2c3e50;
+}
+
+    .content-overlay {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .content-overlay.active {
+        display: block;
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* Mobile menu styles */
+    .mobile-menu {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: -100%; /* Start from off-screen instead of using transform */
+        width: 55%;
+        height: 100%;
+        background: #2c3e50;
+        color: #fff;
+        padding: 20px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        transition: left 0.3s ease-in-out; /* Change from transform to left */
+        transition: transform 0.3s ease;
+    }
+
+    .mobile-menu.active {
+        left: 0;
+        opacity: 1;
+        transform: translateX(0);
+        display: flex;
+    }
+
+    .menu-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .close-menu {
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 28px;
+        cursor: pointer;
+    }
+
+    .menu-items {
+        display: flex; 
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-top: 80px; /* Add space below header */
+        gap: 20px;
+    }
+
+    .menu-item {
+        color: #f2f2f2;
+        text-decoration: none;
+        padding: 15px 0;
+        font-size: 24px; /* Increase font size */
+        transition: color 0.3s ease;
+        width: 100%;
+        text-align: center;
+    }
+
+    .menu-item:hover {
+        color: #00bfff;
+    }
+
+    .dropdown-btn {
+        background: none;
+        border: none;
+        color: #f2f2f2;
+        padding: 10px 0;
+        font-size: 18px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .dropdown-content {
+        display: none;
+        padding-left: 15px;
+        margin-top: 5px;
+    }
+
+    .dropdown-content a {
+        display: block;
+        color: #f2f2f2;
+        text-decoration: none;
+        padding: 8px 0;
+        font-size: 16px;
+    }
+
+    .dropdown-content a:hover {
+        color: #00bfff;
+    }
+
+    .mobile-auth-box {
+        margin-top: auto; /* Push to bottom */
+        padding: 20px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .mobile-auth-box .menu-item {
+        font-size: 20px;
+        padding: 10px 0;
+    }
+
+    .mobile-menu.active .menu-header {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Menu items staggered animation */
+    .menu-items > * {
+        opacity: 0;
+        transform: translateX(-20px);
+        transition: all 0.3s ease-in-out;
+    }
+
+    .mobile-menu.active .menu-items > * {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    /* Add staggered delay for menu items */
+    .mobile-menu.active .menu-items > *:nth-child(1) { transition-delay: 0.1s; }
+    .mobile-menu.active .menu-items > *:nth-child(2) { transition-delay: 0.2s; }
+    .mobile-menu.active .menu-items > *:nth-child(3) { transition-delay: 0.3s; }
+    .mobile-menu.active .menu-items > *:nth-child(4) { transition-delay: 0.4s; }
+    .mobile-menu.active .menu-items > *:nth-child(5) { transition-delay: 0.5s; }
+
+    /* Close button positioning */
+    .close-menu {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 32px;
+        cursor: pointer;
+    }
+
+    /* Hide desktop sidebar */
+    .sidebar {
+        display: none;
+    }
+
+    .burger-menu {
+        display: block;
+    }
+    
+    .left-links, .auth-box {
+        display: none;
+    }
+    
+    /* Burger menu animation when active */
+    .burger-menu.active span:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    
+    .burger-menu.active span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .burger-menu.active span:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* Mobile menu styles */
+  .mobile-menu-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1100;
+  }
+  
+  .mobile-menu-toggle span {
+    width: 100%;
+    height: 3px;
+    background: var(--sidebar-active);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+  }
+  
+  .mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 950;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  
+  .mobile-menu {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 80%;
+    max-width: 300px;
+    height: 100%;
+    background: var(--sidebar-bg);
+    z-index: 1000;
+    transition: left 0.3s ease;
+    overflow-y: auto;
+  }
+  
+  .mobile-menu.active {
+    left: 0;
+  }
+  
+  .mobile-menu-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  .mobile-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  
+  .mobile-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+  }
+  
+  .close-mobile-menu {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .mobile-nav-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .mobile-nav-items li a {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    color: var(--sidebar-text);
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: all 0.3s ease;
+  }
+  
+  .mobile-nav-items li a i {
+    margin-right: 15px;
+    width: 20px;
+    text-align: center;
+  }
+  
+  .mobile-nav-items li a:hover {
+    background: rgba(0,191,255,0.2);
+    border-left: 3px solid var(--sidebar-active);
+  }
+
+  .header {
+        display: flex;
+        justify-content: space-between; /* Keep items on opposite ends */
+        align-items: center;
+        margin-bottom: 15px;
+        margin-top: -20px;
+        padding-right: 10px; /* Add right padding */
+    }
+
+    .header h1 {
+        font-size: 0px; /* Smaller size for mobile */
+        margin-left: 55px; /* Make space for burger menu */
+        margin-bottom: -10px;
+    }
+
+    .theme-toggle {
+        margin-right: 73%; /* Add right margin */
+    }
+
+
+    .left-container {
+        padding: 5px; /* Reduce padding */
+        height: 80%;
+    }
+
+    /* Stat Cards adjustments */
+    .stat-cards-container {
+        display: flex; /* Use flexbox */
+        flex-direction: row; /* Single row */
+        gap: 10px; /* Reduce gap */
+        max-height: none; /* Remove max height */
+        overflow-y: visible; /* Disable vertical scrolling */
+        padding-right: 0; /* Remove padding */
+    }
+
+    .stat-card {
+        padding: 13px; /* Reduce padding */
+        width: 40px;
+        height: auto; /* Auto height */
+    }
+
+    .stat-card h3 {
+        font-size: 9px; /* Smaller font size */
+    }
+
+    .stat-card .number {
+        font-size: 21px; /* Smaller font size */
+        margin: 5px 0; /* Reduce margin */
+    }
+
+    .stat-card .icon {
+        font-size: 10px; /* Smaller font size */
+    }
+
+    /* Disable hover effects on mobile */
+    .bottom-left-top:hover,
+    .bottom-left-bottom:hover {
+        flex: 1 !important; /* Reset flex value */
+    }
+
+    .bottom-left-top:hover + .bottom-left-bottom,
+    .bottom-left-bottom:hover + .bottom-left-top {
+        flex: 1 !important; /* Reset flex value */
+    }
+    .main-content {
+        padding: 10px; /* Reduce padding */
+        margin-top: 20px; /* Move container up */
+    }
+
+    .left-container.requests-section {
+        margin-top: -40px;
+        padding: 10px; /* Reduce padding */
+        border-radius: 8px; /* Adjust border-radius */
+        width: 35%; /* Fixed width */
+        overflow-y: auto; /* Enable vertical scrolling */
+        max-height: 250px; /* Set a maximum height */
+    }
+
+    .reset-btn {
+        margin-top: 1px; /* Add top margin */
+        display: block; /* Full width */
+        width: 100%;
+    }
+
+    /* Today's Appointments Container adjustments */
+    .right-container.todays-appointments-section {
+        padding: 5px; /* Reduce padding */
+        border-radius: 8px; /* Adjust border-radius */
+        width: 100%; /* Fixed width */
+        overflow-y: auto; /* Enable vertical scrolling */
+        max-height: 200px; /* Reduce max height */
+    }
+    .todays-appointments-section h2 {
+        font-size: 1rem; /* Smaller font size */
+        margin-bottom: 5px; /* Reduce margin */
+    }
+
+    .floating-calendar-btn {
+        display: flex !important;
+    }
+
+    /* Hide the calendar */
+    .left-container[style*="flex: 0.8;"] {
+        display: none !important;
+    }
+    
+    .confirmation-modal .confirmation-content {
+        max-width: 90% !important; /* Take up more screen width */
+        margin: 10px auto !important; /* Adjust margins */
+        padding: 15px !important; /* Reduce padding */
+        border-radius: 10px !important; /* Adjust border-radius */
+    }
+
+    .confirmation-modal .modal-header {
+        flex-direction: column !important; /* Stack header elements */
+        align-items: flex-start !important; /* Align to the left */
+        margin-bottom: 10px !important; /* Reduce margin */
+        padding-bottom: 10px !important; /* Reduce padding */
+    }
+
+    .confirmation-modal .modal-title h3 {
+        font-size: 18px !important; /* Smaller font size */
+        margin-bottom: 5px !important; /* Reduce margin */
+    }
+
+    .confirmation-modal .info-grid {
+        grid-template-columns: 1fr !important; /* Single column layout */
+        gap: 10px !important; /* Reduce gap */
+    }
+
+    .confirmation-modal .info-item {
+        flex-direction: column !important; /* Stack label and value */
+        align-items: flex-start !important; /* Align to the left */
+    }
+
+    .confirmation-modal .info-content label {
+        font-size: 12px !important; /* Smaller font size */
+    }
+
+    .confirmation-modal .info-content span {
+        font-size: 14px !important; /* Smaller font size */
+    }
+
+    .confirmation-modal .modal-footer {
+        flex-direction: column !important; /* Stack buttons */
+        align-items: stretch !important; /* Stretch buttons to full width */
+        gap: 10px !important; /* Increase gap */
+    }
+
+    .confirmation-modal .action-btn {
+        width: 100% !important; /* Full width buttons */
+    }
+
+}
+
+
+#calendarModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+#calendarModal .confirmation-content {
+    background-color: var(--modal-bg);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    max-width: 450px;
+    width: 90%;
+    transform: translateY(-20px);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+}
+
+
+.floating-calendar-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px; /* Changed from left to right */
+    background-color: var(--sidebar-active);
+    color: white;
+    border: none;
+    border-radius: 10px; /* Changed from 50% to 10px */
+    width: 70px;
+    height: 70px;
+    font-size: 20px;
+    display: none; /* Hidden by default */
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.floating-calendar-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+
+
+
     </style>
 
     <!-- Add Chart.js library before closing head tag -->
@@ -2472,21 +2936,33 @@
 </head>
 <body>
 
-    <div id="loadingOverlay" style="
-        display: none;
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background-color: rgba(255, 255, 255, 0.8);
-        z-index: 9999;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 24px;
-        color: var(--sidebar-active);
-    ">
-        <i class="fas fa-spinner fa-spin"></i> Loading...
+    <div class="burger-menu">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<div class="mobile-menu">
+    <div class="menu-header">
+        <button class="close-menu">&times;</button>
     </div>
+    <nav class="menu-items">
+        <a href="MyRecords.html" class="menu-item"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="forms.html" class="menu-item"><i class="fas fa-file-medical"></i> Forms</a>
+        <a href="mygallery.html" class="menu-item"><i class="fas fa-images"></i> My Gallery</a>
+        <div class="mobile-auth-box">
+            <a href="settings.html" class="menu-item"><i class="fas fa-cog"></i> Settings</a>
+            <a href="landingpage.html" class="menu-item logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </nav>
+</div>
+
+<div class="content-overlay"></div>
+
+
+<button id="showCalendarBtn" class="floating-calendar-btn">
+    <i class="fas fa-calendar-alt"></i>
+</button>
 
     <div class="dashboard">
         <!-- Sidebar Navigation -->
@@ -2507,10 +2983,10 @@
             <ul class="sidebar-menu">
                 <li><a href="admin.html"><i class="fas fa-home"></i> Dashboard</a></li>
                 <li><a href="appointment-request-logs.html"><i class="fas fa-clipboard-list"></i> <span>Appointment Request Logs</span></a></li>
-                <li><a href="appointment-history.html"><i class="fas fa-calendar-alt"></i> <span> Appointment History</a></li>
+                <li><a href="#"><i class="fas fa-calendar-alt"></i> <span> Appointment History</a></li>
                 <li><a href="patients.html"><i class="fas fa-users"></i> <span>Patients</span></a></li>
                 <li><a href="#"><i class="fas fa-chart-line"></i> <span>Reports</span></a></li>
-                <li><a href="landingpage.html" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                <li><a href="landingpage.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
             </ul>
             <!-- Add Return to Home menu at the bottom -->
             <div style="position: absolute; bottom: 20px; width: 13%;">
@@ -2519,7 +2995,7 @@
                         <li><a href="Admin settings.html"><i class="fas fa-cog"></i> Settings</a></li>
                     </ul>
                     <ul class="sidebar-menu return-home-menu">
-                        <li><a href="landingpage.html" class="logout-btn"><i class="fas fa-arrow-left"></i> Return to Home</a></li>
+                        <li><a href="landingpage.html"><i class="fas fa-arrow-left"></i> Return to Home</a></li>
                     </ul>
                 </div>
             </div>
@@ -2589,7 +3065,7 @@
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1px;">
                         <select id="chartMetric" style="padding: 8px 15px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-color); font-size: 14px; font-weight: 500;">
                             <option value="visits">Total Patient Visits</option>
-                            <!-- <option value="income">Total Income</option> -->
+                            <option value="income">Total Income</option>
                         </select>
                         <div style="display: flex; gap: 8px;">
                             <button class="time-period-btn active" data-period="weekly" style="padding: 6px 12px; border-radius: 4px; border: 1px solid var(--sidebar-active); background: var(--card-bg); color: var(--text-color); cursor: pointer;">Week</button>
@@ -2773,7 +3249,6 @@
                         </div>
                     </div>
                 </div>
-                
                 <div id="rejectConfirmationModal" class="confirmation-modal">
                     <div class="confirmation-content">
                         <!-- Decorative elements -->
@@ -2810,42 +3285,7 @@
                     </div>
                 </div>
 
-                 <!-- Notification Confirmation Modal -->
-                <div id="notificationConfirmationModal" class="confirmation-modal">
-                    <div class="confirmation-content">
-                        <!-- Decorative elements -->
-                        <div class="modal-decoration modal-decoration-1"></div>
-                        <div class="modal-decoration modal-decoration-2"></div>
-                        
-                        <div class="confirmation-header" style="display: flex; justify-content: space-between; align-items: center;">
-                            <div style="display: flex; align-items: center;">
-                                <div class="confirmation-icon accept-icon">
-                                    <i class="fas fa-envelope"></i>
-                                </div>
-                                <h3 class="confirmation-title" id="notificationModalTitle">Send Notification</h3>
-                            </div>
-                            <button onclick="closeNotificationModal()" style="background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 1.2rem;">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                        
-                        <p class="confirmation-message" id="notificationModalMessage">
-                            Do you want to send a confirmation message via SMS or email?
-                        </p>
-                        
-                        <div class="confirmation-buttons">
-                            <button class="cancel-btn" onclick="closeNotificationModal()">
-                                <i class="fas fa-times"></i> No
-                            </button>
-                            <button class="confirm-btn" onclick="confirmSendNotification()">
-                                <i class="fas fa-check"></i> Yes
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
                 <div id="appointmentDetailsModal" class="confirmation-modal">
-                    <div class="confirmation-content" style="max-width: 800px;">
                         <!-- Modal Header -->
                         <div class="modal-header">
                             <div class="modal-title">
@@ -3056,7 +3496,7 @@
 
 
                 <div id="todayAppointmentModal" class="confirmation-modal">
-                    <div class="confirmation-content" style="max-width: 800px;">
+                    
                         <!-- Modal Header -->
                         <div class="modal-header">
                             <div class="modal-title">
@@ -3261,7 +3701,30 @@
                         </div>
                 </div>
 
-                
+                <!-- Appointment Request Logs -->
+                <div class="left-container" style="flex: 0.8; background: var(--card-bg); border-radius: 10px; padding: 10px; box-shadow: var(--shadow);">
+                    <h2 style="margin-top: 0; margin-bottom: 15px;">
+                        <i class="fas fa-clipboard-list"></i> 
+                        Appointment Request Logs
+                    </h2>
+                    <div class="requests-table-container">
+                        <table class="requests-table">
+                            <thead>
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th>Patient Name</th>
+                                    <th>Appointment Date/Time</th>
+                                    <th>Service</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="requestLogsTableBody">
+                                <!-- Logs will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
                 <!-- Confirmation Modal for Completing Appointments -->
                 <div id="completeConfirmationModal" class="confirmation-modal">
@@ -3296,6 +3759,41 @@
                         </div>
                     </div>
                 </div>
+
+                <div id="calendarModal" class="confirmation-modal">
+    <div class="confirmation-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+            <div class="modal-title">
+                <i class="fas fa-calendar-alt"></i>
+                <h3>Calendar</h3>
+            </div>
+            <button onclick="closeCalendarModal()" class="close-btn" id="closeCalendarBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <h2>
+                    <i class="fas fa-calendar-alt"></i>
+                    <span id="currentMonthYear"></span>
+                </h2>
+                <div class="calendar-nav">
+                    <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                    <button id="today">Today</button>
+                    <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="calendar-grid" id="calendarDays">
+                <!-- Days of week headers will be added here -->
+            </div>
+            <div class="calendar-grid" id="calendarGrid">
+                <!-- Calendar days will be added here -->
+            </div>
+        </div>
+    </div>
+</div>
+
 
                 <script src="admin.js"></script>
 
